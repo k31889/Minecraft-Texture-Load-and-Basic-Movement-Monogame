@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace Minecraft_Texture_Load_and_Basic_Movement
 {
@@ -29,15 +30,15 @@ namespace Minecraft_Texture_Load_and_Basic_Movement
             Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(FOV), aspectRatio, nearPlaneDistance, farPlaneDistance);
         }
 
-        public void Move(float xChange, float yChange, float zChange)
+        public void Move(float xChange, float yChange, float zChange, GameTime gameTime)
         {
-            Position.X += xChange;
-            Position.Y += yChange;
-            Position.Z += zChange;
+            Position.X += xChange * (float)gameTime.ElapsedGameTime.TotalSeconds; ;
+            Position.Y += yChange * (float)gameTime.ElapsedGameTime.TotalSeconds; ;
+            Position.Z += zChange * (float)gameTime.ElapsedGameTime.TotalSeconds; ;
 
-            FocusPoint.X += xChange;
-            FocusPoint.Y += yChange;
-            FocusPoint.Z += zChange;
+            FocusPoint.X += xChange * (float)gameTime.ElapsedGameTime.TotalSeconds; ;
+            FocusPoint.Y += yChange * (float)gameTime.ElapsedGameTime.TotalSeconds; ;
+            FocusPoint.Z += zChange * (float)gameTime.ElapsedGameTime.TotalSeconds; ;
 
             View = Matrix.CreateLookAt(Position, FocusPoint, Vector3.UnitY);
         }

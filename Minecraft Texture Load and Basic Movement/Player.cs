@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 namespace Minecraft_Texture_Load_and_Basic_Movement
@@ -16,24 +17,24 @@ namespace Minecraft_Texture_Load_and_Basic_Movement
             Cam = camera;
             MovementSpeed = mSpeed;
         }
-        public void Movement()
+        public void Movement(GameTime gameTime)
         {
             var kstate = Keyboard.GetState();
             if (kstate.IsKeyDown(Keys.Right) || kstate.IsKeyDown(Keys.D))
             {
-                Cam.Move(MovementSpeed, 0, 0);
+                Cam.Move(MovementSpeed, 0, 0, gameTime);
             }
             if (kstate.IsKeyDown(Keys.Left) || kstate.IsKeyDown(Keys.A))
             {
-                Cam.Move(-MovementSpeed, 0, 0);
+                Cam.Move(-MovementSpeed, 0, 0, gameTime);
             }
             if (kstate.IsKeyDown(Keys.Up) || kstate.IsKeyDown(Keys.W))
             {
-                Cam.Move(0, 0, -MovementSpeed);
+                Cam.Move(0, 0, -MovementSpeed, gameTime);
             }
             if (kstate.IsKeyDown(Keys.Down) || kstate.IsKeyDown(Keys.S))
             {
-                Cam.Move(0, 0, MovementSpeed);
+                Cam.Move(0, 0, MovementSpeed, gameTime);
             }
         }
     }

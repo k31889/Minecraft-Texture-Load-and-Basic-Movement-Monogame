@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -14,8 +15,9 @@ namespace Minecraft_Texture_Load_and_Basic_Movement
         private Player Player1;
         private TextureHandler Textures;
         private Camera Cam;
+        private FPS_Counter fps;
 
-        private Texture2D CurrentTexture;
+        private SpriteFont font;
 
         public Game1()
         {
@@ -26,10 +28,17 @@ namespace Minecraft_Texture_Load_and_Basic_Movement
 
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here           
+            // TODO: Add your initialization logic here        
+            fps = new FPS_Counter();
             Cam = new Camera(45, _graphics.PreferredBackBufferWidth / _graphics.PreferredBackBufferHeight, 0.1f, 100f, new Vector3(0, 0, 10), new Vector3(0, 0, 0));
-            Player1 = new Player(1f, Cam);
+            Player1 = new Player(10f, Cam);
             Textures = new TextureHandler(GraphicsDevice, "Minecraft Texture Atlas", "Cube");
+
+            this.TargetElapsedTime = TimeSpan.FromSeconds(1d / 60d);
+            this.IsFixedTimeStep = false;
+            _graphics.SynchronizeWithVerticalRetrace = false;
+            _graphics.ApplyChanges();
+
             base.Initialize();
         }
 
@@ -39,6 +48,7 @@ namespace Minecraft_Texture_Load_and_Basic_Movement
 
             // TODO: use this.Content to load your game content here
             Textures.LoadTextures(Content);
+            font = Content.Load<SpriteFont>("font");
         }
 
         protected override void Update(GameTime gameTime)
@@ -47,7 +57,9 @@ namespace Minecraft_Texture_Load_and_Basic_Movement
                 Exit();
 
             // TODO: Add your update logic here
-            Player1.Movement();
+            fps.Update(gameTime);
+            Player1.Movement(gameTime);
+
             base.Update(gameTime);
         }
 
@@ -56,12 +68,14 @@ namespace Minecraft_Texture_Load_and_Basic_Movement
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
-            CurrentTexture = Textures.GetTexture(192, 176);
             for(int i = 0; i < 3; i++)
             {
-                Textures.DrawCube(Matrix.CreateTranslation(i * 10, 0, 0), Cam.GetView(), Cam.GetProjection(), CurrentTexture);
+                Textures.DrawCube(Matrix.CreateTranslation(i * 10, 0, 0), Cam.GetView(), Cam.GetProjection(), 192, 176);
             }
-            
+            _spriteBatch.Begin();
+            fps.DrawFps(_spriteBatch, font, new Vector2(0f, 0f), Color.White);
+            _spriteBatch.End();
+
             base.Draw(gameTime);
         }
     }

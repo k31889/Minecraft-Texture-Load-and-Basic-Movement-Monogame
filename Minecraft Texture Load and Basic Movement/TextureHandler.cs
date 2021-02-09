@@ -41,7 +41,7 @@ namespace Minecraft_Texture_Load_and_Basic_Movement
         }
 
         //Converts Texture Atlas to single tile texture
-        public Texture2D GetTexture(int TexturePosX, int TexturePosY)
+        private Texture2D GetTexture(int TexturePosX, int TexturePosY)
         {
             Rectangle sourceRectangle = new Rectangle(TexturePosX, TexturePosY, TextureWidth, TextureHeight);            //Gets and stores a single texture from the texture library
             Texture2D newTexture = new Texture2D(graphicsDevice, sourceRectangle.Width, sourceRectangle.Height);         //Create new Texture2D with correct width and Height
@@ -53,7 +53,7 @@ namespace Minecraft_Texture_Load_and_Basic_Movement
             return BlockTexture;
         }
 
-        public void DrawCube(Matrix world, Matrix view, Matrix projection, Texture2D BlockTexture)
+        public void DrawCube(Matrix world, Matrix view, Matrix projection, int TexturePosX, int TexturePosY)
         {
             graphicsDevice.SamplerStates[0] = SamplerState.PointWrap;                                                   //Removes issues where linear interpolation make pixel textures blurry
             foreach (ModelMesh mesh in Cube.Meshes)
@@ -63,7 +63,7 @@ namespace Minecraft_Texture_Load_and_Basic_Movement
                     effect.World = world;
                     effect.View = view;
                     effect.Projection = projection;
-                    effect.Texture = BlockTexture;
+                    effect.Texture = GetTexture(TexturePosX, TexturePosY);
                 }
                 mesh.Draw();
             }

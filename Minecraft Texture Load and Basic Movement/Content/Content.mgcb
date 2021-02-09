@@ -32,6 +32,13 @@
 /processorParam:TextureFormat=Compressed
 /build:Cube.fbx
 
+#begin font.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:font.spritefont
+
 #begin Minecraft Texture Atlas.png
 /importer:TextureImporter
 /processor:TextureProcessor

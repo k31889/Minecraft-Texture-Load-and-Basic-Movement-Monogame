@@ -26,7 +26,7 @@ namespace Minecraft_Texture_Load_and_Basic_Movement
             IsMouseVisible = true;
 
             _graphics.PreferredBackBufferWidth = 800;
-            _graphics.PreferredBackBufferHeight = 480;
+            _graphics.PreferredBackBufferHeight = 400;
             _graphics.IsFullScreen = false;
             _graphics.ApplyChanges();
         }

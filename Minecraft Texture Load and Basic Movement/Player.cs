@@ -36,6 +36,14 @@ namespace Minecraft_Texture_Load_and_Basic_Movement
             {
                 Cam.Move(0, 0, MovementSpeed, gameTime);
             }
+            if (kstate.IsKeyDown(Keys.Q))
+            {
+                Cam.Rotate(1, 0, gameTime);
+            }
+            if (kstate.IsKeyDown(Keys.E))
+            {
+                Cam.Rotate(-1, 0, gameTime);
+            }
         }
     }
 }

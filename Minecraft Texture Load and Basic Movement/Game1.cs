@@ -57,7 +57,11 @@ namespace Minecraft_Texture_Load_and_Basic_Movement
 
             // TODO: Add your drawing code here
             CurrentTexture = Textures.GetTexture(200, 200);
-            Textures.DrawCube(world, Cam.GetView(), Cam.GetProjection(), CurrentTexture);
+            for(int i = 0; i < 3; i++)
+            {
+                Textures.DrawCube(Matrix.CreateTranslation(i * 10, 0, 0), Cam.GetView(), Cam.GetProjection(), CurrentTexture);
+            }
+            
             base.Draw(gameTime);
         }
     }

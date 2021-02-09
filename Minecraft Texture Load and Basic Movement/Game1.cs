@@ -26,8 +26,8 @@ namespace Minecraft_Texture_Load_and_Basic_Movement
 
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
-            Cam = new Camera(45, 800 / 400, 0.1f, 100f, new Vector3(0, 0, 10), new Vector3(0, 0, 0));
+            // TODO: Add your initialization logic here           
+            Cam = new Camera(45, _graphics.PreferredBackBufferWidth / _graphics.PreferredBackBufferHeight, 0.1f, 100f, new Vector3(0, 0, 10), new Vector3(0, 0, 0));
             Player1 = new Player(1f, Cam);
             Textures = new TextureHandler(GraphicsDevice, "Minecraft Texture Atlas", "Cube");
             base.Initialize();
@@ -56,7 +56,7 @@ namespace Minecraft_Texture_Load_and_Basic_Movement
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
-            CurrentTexture = Textures.GetTexture(200, 200);
+            CurrentTexture = Textures.GetTexture(192, 176);
             for(int i = 0; i < 3; i++)
             {
                 Textures.DrawCube(Matrix.CreateTranslation(i * 10, 0, 0), Cam.GetView(), Cam.GetProjection(), CurrentTexture);

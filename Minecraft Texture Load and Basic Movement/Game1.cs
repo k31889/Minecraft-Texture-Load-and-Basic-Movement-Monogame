@@ -24,6 +24,11 @@ namespace Minecraft_Texture_Load_and_Basic_Movement
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+
+            _graphics.PreferredBackBufferWidth = 800;
+            _graphics.PreferredBackBufferHeight = 480;
+            _graphics.IsFullScreen = false;
+            _graphics.ApplyChanges();
         }
 
         protected override void Initialize()
@@ -34,8 +39,8 @@ namespace Minecraft_Texture_Load_and_Basic_Movement
             Player1 = new Player(10f, Cam);
             Textures = new TextureHandler(GraphicsDevice, "Minecraft Texture Atlas", "Cube");
 
-            this.TargetElapsedTime = TimeSpan.FromSeconds(1d / 60d);
-            this.IsFixedTimeStep = false;
+            this.TargetElapsedTime = TimeSpan.FromSeconds(1d / 240d);
+            this.IsFixedTimeStep = true;
             _graphics.SynchronizeWithVerticalRetrace = false;
             _graphics.ApplyChanges();
 
@@ -70,7 +75,7 @@ namespace Minecraft_Texture_Load_and_Basic_Movement
             // TODO: Add your drawing code here
             for(int i = 0; i < 3; i++)
             {
-                Textures.DrawCube(Matrix.CreateTranslation(i * 10, 0, 0), Cam.GetView(), Cam.GetProjection(), 192, 176);
+                Textures.DrawCube(Matrix.CreateTranslation(i * 10, 0, 0), Cam.GetView(), Cam.GetProjection(), 304, 240);
             }
             _spriteBatch.Begin();
             fps.DrawFps(_spriteBatch, font, new Vector2(0f, 0f), Color.White);

@@ -23,7 +23,7 @@ namespace Minecraft_Texture_Load_and_Basic_Movement
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            IsMouseVisible = true;
+            IsMouseVisible = false;
 
 
             _graphics.PreferredBackBufferWidth = 1280;
@@ -36,7 +36,7 @@ namespace Minecraft_Texture_Load_and_Basic_Movement
         {
             // TODO: Add your initialization logic here        
             fps = new FPS_Counter();
-            Cam = new Camera_Controller(45, _graphics.PreferredBackBufferWidth / _graphics.PreferredBackBufferHeight, 0.1f, 100f, new Vector3(0, 0, 10), new Vector3(0, 0, 0), 1f, _graphics);
+            Cam = new Camera_Controller(45, _graphics.PreferredBackBufferWidth / _graphics.PreferredBackBufferHeight, 0.1f, 100f, new Vector3(0, 0, 10), new Vector3(0, 0, 0), 0.1f, _graphics);
             Cam.Initialize();
             Textures = new TextureHandler(GraphicsDevice, "Minecraft Texture Atlas", "Cube");
 

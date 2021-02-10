@@ -19,7 +19,7 @@ namespace Minecraft_Texture_Load_and_Basic_Movement
 
         GraphicsDeviceManager graphics;
 
-        private float Sensitivity;
+        private float movementSpeed;
 
         MouseState prevMouseState;
 
@@ -32,7 +32,7 @@ namespace Minecraft_Texture_Load_and_Basic_Movement
             return Projection;
         }
 
-        public Camera_Controller(float FOV, float aspectRatio, float nearPlaneDistance, float farPlaneDistance, Vector3 StartPos, Vector3 StartFocus, float Sens, GraphicsDeviceManager graphicsDeviceManager)
+        public Camera_Controller(float FOV, float aspectRatio, float nearPlaneDistance, float farPlaneDistance, Vector3 StartPos, Vector3 StartFocus, float MoveSpeed, GraphicsDeviceManager graphicsDeviceManager)
         {
             cameraPosition = StartPos;
             cameraDirection = StartFocus - StartPos;
@@ -42,7 +42,7 @@ namespace Minecraft_Texture_Load_and_Basic_Movement
 
             graphics = graphicsDeviceManager;
 
-            Sensitivity = Sens;
+            movementSpeed = MoveSpeed;
 
             Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4, graphics.PreferredBackBufferWidth / graphics.PreferredBackBufferHeight, 1, 100);
         }
@@ -57,14 +57,14 @@ namespace Minecraft_Texture_Load_and_Basic_Movement
         public void Update(GameTime gameTimew)
         {
             if (Keyboard.GetState().IsKeyDown(Keys.W))
-                cameraPosition += cameraDirection * Sensitivity;
+                cameraPosition += cameraDirection * movementSpeed;
             if (Keyboard.GetState().IsKeyDown(Keys.S))
-                cameraPosition -= cameraDirection * Sensitivity;
+                cameraPosition -= cameraDirection * movementSpeed;
 
             if (Keyboard.GetState().IsKeyDown(Keys.A))
-                cameraPosition += Vector3.Cross(cameraUp, cameraDirection) * Sensitivity;
+                cameraPosition += Vector3.Cross(cameraUp, cameraDirection) * movementSpeed;
             if (Keyboard.GetState().IsKeyDown(Keys.D))
-                cameraPosition -= Vector3.Cross(cameraUp, cameraDirection) * Sensitivity;
+                cameraPosition -= Vector3.Cross(cameraUp, cameraDirection) * movementSpeed;
 
 
 
@@ -73,7 +73,7 @@ namespace Minecraft_Texture_Load_and_Basic_Movement
 
 
             cameraDirection = Vector3.Transform(cameraDirection, Matrix.CreateFromAxisAngle(Vector3.Cross(cameraUp, cameraDirection), (MathHelper.PiOver4 / 100) * (Mouse.GetState().Y - prevMouseState.Y)));
-            cameraUp = Vector3.Transform(cameraUp, Matrix.CreateFromAxisAngle(Vector3.Cross(cameraUp, cameraDirection), (MathHelper.PiOver4 / 100) * (Mouse.GetState().Y - prevMouseState.Y)));
+            cameraPosition.Y = 0;
 
             // Reset prevMouseState
             prevMouseState = Mouse.GetState();

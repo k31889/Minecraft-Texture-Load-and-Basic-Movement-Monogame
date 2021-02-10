@@ -27,7 +27,7 @@ namespace Minecraft_Texture_Load_and_Basic_Movement
             elapsed = (double)(now - last);
             if (elapsed > msgFrequency)
             {
-                msg = " Fps: " + Math.Round((frames / elapsed)).ToString();
+                msg = " fps: " + Math.Round((frames / elapsed)).ToString();
                 //Console.WriteLine(msg);
                 elapsed = 0;
                 frames = 0;

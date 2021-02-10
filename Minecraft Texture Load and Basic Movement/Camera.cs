@@ -40,16 +40,21 @@ namespace Minecraft_Texture_Load_and_Basic_Movement
             FocusPoint.Y += yChange * (float)gameTime.ElapsedGameTime.TotalSeconds;
             FocusPoint.Z += zChange * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            View = Matrix.CreateLookAt(Position, FocusPoint, Vector3.UnitY);
+            CreateLookAt();
         }
 
         public void Rotate(float xChange, float yChange, GameTime gameTime)
         {
             FocusPoint = Vector3.Transform(FocusPoint - Position, Matrix.CreateRotationY(xChange *(float)gameTime.ElapsedGameTime.TotalSeconds)) + Position;
-            View = Matrix.CreateLookAt(Position, FocusPoint, Vector3.UnitY);
+            CreateLookAt();
 
-            //FocusPoint.X += xChange * (float)gameTime.ElapsedGameTime.TotalSeconds; ;
-            //FocusPoint.Y += yChange * (float)gameTime.ElapsedGameTime.TotalSeconds; ;
+            //FocusPoint.X += xChange * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            //FocusPoint.Y += yChange * (float)gameTime.ElapsedGameTime.TotalSeconds;
+        }
+
+        private void CreateLookAt()
+        {
+            View = Matrix.CreateLookAt(Position, FocusPoint, Vector3.UnitY);
         }
     }
 }

@@ -14,7 +14,7 @@ namespace Minecraft_Texture_Load_and_Basic_Movement
 
         private Player Player1;
         private TextureHandler Textures;
-        private Camera Cam;
+        private Camera_Controller Cam;
         private FPS_Counter fps;
 
         private SpriteFont font;
@@ -36,8 +36,8 @@ namespace Minecraft_Texture_Load_and_Basic_Movement
         {
             // TODO: Add your initialization logic here        
             fps = new FPS_Counter();
-            Cam = new Camera(45, _graphics.PreferredBackBufferWidth / _graphics.PreferredBackBufferHeight, 0.1f, 100f, new Vector3(0, 0, 10), new Vector3(0, 0, 0));
-            Player1 = new Player(10f, Cam);
+            Cam = new Camera_Controller(45, _graphics.PreferredBackBufferWidth / _graphics.PreferredBackBufferHeight, 0.1f, 100f, new Vector3(0, 0, 10), new Vector3(0, 0, 0), 1f, _graphics);
+            Cam.Initialize();
             Textures = new TextureHandler(GraphicsDevice, "Minecraft Texture Atlas", "Cube");
 
             _graphics.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
@@ -66,7 +66,7 @@ namespace Minecraft_Texture_Load_and_Basic_Movement
 
             // TODO: Add your update logic here
             fps.Update(gameTime);
-            Player1.Movement(gameTime);
+            Cam.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -76,10 +76,13 @@ namespace Minecraft_Texture_Load_and_Basic_Movement
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
-            for(int i = 0; i < 3; i++)
+            for(int i = -3; i < 2; i++)
             {
-                _graphics.GraphicsDevice.DepthStencilState = DepthStencilState.Default;                                     //Gives render depth so that objects behind others aren't rendered
-                Textures.DrawCube(Matrix.CreateTranslation(i * 2, 0, 0), Cam.GetView(), Cam.GetProjection(), 304, 240);
+                for (int j = -3; j < 2; j++)
+                {
+                    _graphics.GraphicsDevice.DepthStencilState = DepthStencilState.Default;                                   //Gives render depth so that objects behind others aren't rendered
+                    Textures.DrawCube(Matrix.CreateTranslation(i * 2, -4, j * 2), Cam.GetView(), Cam.GetProjection(), 304, 240);
+                }
             }
             _spriteBatch.Begin();
             fps.DrawFps(_spriteBatch, font, new Vector2(0f, 0f), Color.White);

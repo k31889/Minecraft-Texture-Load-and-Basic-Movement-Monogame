@@ -12,13 +12,13 @@ namespace Minecraft_Texture_Load_and_Basic_Movement
 
         private Matrix world = Matrix.CreateTranslation(new Vector3(0, 0, 0));
 
-        private Player Player1;
         private TextureHandler Textures;
         private Camera_Controller Cam;
         private FPS_Counter fps;
 
         private SpriteFont font;
 
+        private RasterizerState rasterizerState;
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -36,9 +36,11 @@ namespace Minecraft_Texture_Load_and_Basic_Movement
         {
             // TODO: Add your initialization logic here        
             fps = new FPS_Counter();
-            Cam = new Camera_Controller(45, _graphics.PreferredBackBufferWidth / _graphics.PreferredBackBufferHeight, 0.1f, 100f, new Vector3(0, 0, 10), new Vector3(0, 0, 0), 0.1f, _graphics);
+            Cam = new Camera_Controller(45, _graphics.PreferredBackBufferWidth / _graphics.PreferredBackBufferHeight, 0.1f, 100f, new Vector3(0, 0, 10), new Vector3(0, 0, 0), 10f, 50f, _graphics);
             Cam.Initialize();
             Textures = new TextureHandler(GraphicsDevice, "Minecraft Texture Atlas", "Cube");
+
+            rasterizerState = new RasterizerState();
 
             _graphics.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
             this.TargetElapsedTime = TimeSpan.FromSeconds(1d / 240d);
@@ -66,7 +68,7 @@ namespace Minecraft_Texture_Load_and_Basic_Movement
 
             // TODO: Add your update logic here
             fps.Update(gameTime);
-            Cam.Update();
+            Cam.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -80,7 +82,8 @@ namespace Minecraft_Texture_Load_and_Basic_Movement
             {
                 for (int j = -3; j < 2; j++)
                 {
-                    _graphics.GraphicsDevice.DepthStencilState = DepthStencilState.Default;                                   //Gives render depth so that objects behind others aren't rendered
+                    _graphics.GraphicsDevice.DepthStencilState = DepthStencilState.Default;                                   //Gives render depth so that objects behind others aren't rendered on top
+                    rasterizerState.CullMode = CullMode.CullClockwiseFace;
                     Textures.DrawCube(Matrix.CreateTranslation(i * 2, -4, j * 2), Cam.GetView(), Cam.GetProjection(), 304, 240);
                 }
             }

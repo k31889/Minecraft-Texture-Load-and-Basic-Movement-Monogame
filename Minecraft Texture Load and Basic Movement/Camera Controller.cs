@@ -20,6 +20,7 @@ namespace Minecraft_Texture_Load_and_Basic_Movement
         GraphicsDeviceManager graphics;
 
         private float movementSpeed;
+        private float Sensitivity;
 
         MouseState prevMouseState;
 
@@ -32,7 +33,7 @@ namespace Minecraft_Texture_Load_and_Basic_Movement
             return Projection;
         }
 
-        public Camera_Controller(float FOV, float aspectRatio, float nearPlaneDistance, float farPlaneDistance, Vector3 StartPos, Vector3 StartFocus, float MoveSpeed, GraphicsDeviceManager graphicsDeviceManager)
+        public Camera_Controller(float FOV, float aspectRatio, float nearPlaneDistance, float farPlaneDistance, Vector3 StartPos, Vector3 StartFocus, float MoveSpeed, float Sens, GraphicsDeviceManager graphicsDeviceManager)
         {
             cameraPosition = StartPos;
             cameraDirection = StartFocus - StartPos;
@@ -43,6 +44,7 @@ namespace Minecraft_Texture_Load_and_Basic_Movement
             graphics = graphicsDeviceManager;
 
             movementSpeed = MoveSpeed;
+            Sensitivity = Sens;
 
             Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4, graphics.PreferredBackBufferWidth / graphics.PreferredBackBufferHeight, 1, 100);
         }
@@ -54,25 +56,25 @@ namespace Minecraft_Texture_Load_and_Basic_Movement
             prevMouseState = Mouse.GetState();
         }
 
-        public void Update()
+        public void Update(GameTime gameTime)
         {
             if (Keyboard.GetState().IsKeyDown(Keys.W))
-                cameraPosition += cameraDirection * movementSpeed;
+                cameraPosition += cameraDirection * movementSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             if (Keyboard.GetState().IsKeyDown(Keys.S))
-                cameraPosition -= cameraDirection * movementSpeed;
+                cameraPosition -= cameraDirection * movementSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             if (Keyboard.GetState().IsKeyDown(Keys.A))
-                cameraPosition += Vector3.Cross(cameraUp, cameraDirection) * movementSpeed;
+                cameraPosition += Vector3.Cross(cameraUp, cameraDirection) * movementSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             if (Keyboard.GetState().IsKeyDown(Keys.D))
-                cameraPosition -= Vector3.Cross(cameraUp, cameraDirection) * movementSpeed;
+                cameraPosition -= Vector3.Cross(cameraUp, cameraDirection) * movementSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
 
 
             // Rotation on X axis
-            cameraDirection = Vector3.Transform(cameraDirection, Matrix.CreateFromAxisAngle(cameraUp, (-MathHelper.PiOver4 / 500) * (Mouse.GetState().X - prevMouseState.X)));
+            cameraDirection = Vector3.Transform(cameraDirection, Matrix.CreateFromAxisAngle(cameraUp, (-MathHelper.PiOver4 / 100) * (Mouse.GetState().X - prevMouseState.X) * (float)gameTime.ElapsedGameTime.TotalSeconds * Sensitivity));
 
             // Rotation on Y axis
-            cameraDirection = Vector3.Transform(cameraDirection, Matrix.CreateFromAxisAngle(Vector3.Cross(cameraUp, cameraDirection), (MathHelper.PiOver4 / 500) * (Mouse.GetState().Y - prevMouseState.Y)));
+            cameraDirection = Vector3.Transform(cameraDirection, Matrix.CreateFromAxisAngle(Vector3.Cross(cameraUp, cameraDirection), (MathHelper.PiOver4 / 100) * (Mouse.GetState().Y - prevMouseState.Y) * (float)gameTime.ElapsedGameTime.TotalSeconds * Sensitivity));
 
             //reset Y axis movement so player only moves horizontally
             cameraPosition.Y = 0;

@@ -54,7 +54,7 @@ namespace Minecraft_Texture_Load_and_Basic_Movement
             prevMouseState = Mouse.GetState();
         }
 
-        public void Update(GameTime gameTimew)
+        public void Update()
         {
             if (Keyboard.GetState().IsKeyDown(Keys.W))
                 cameraPosition += cameraDirection * movementSpeed;
@@ -68,15 +68,17 @@ namespace Minecraft_Texture_Load_and_Basic_Movement
 
 
 
-            // Rotation in the world
-            cameraDirection = Vector3.Transform(cameraDirection, Matrix.CreateFromAxisAngle(cameraUp, (-MathHelper.PiOver4 / 150) * (Mouse.GetState().X - prevMouseState.X)));
+            // Rotation on X axis
+            cameraDirection = Vector3.Transform(cameraDirection, Matrix.CreateFromAxisAngle(cameraUp, (-MathHelper.PiOver4 / 500) * (Mouse.GetState().X - prevMouseState.X)));
 
+            // Rotation on Y axis
+            cameraDirection = Vector3.Transform(cameraDirection, Matrix.CreateFromAxisAngle(Vector3.Cross(cameraUp, cameraDirection), (MathHelper.PiOver4 / 500) * (Mouse.GetState().Y - prevMouseState.Y)));
 
-            cameraDirection = Vector3.Transform(cameraDirection, Matrix.CreateFromAxisAngle(Vector3.Cross(cameraUp, cameraDirection), (MathHelper.PiOver4 / 100) * (Mouse.GetState().Y - prevMouseState.Y)));
+            //reset Y axis movement so player only moves horizontally
             cameraPosition.Y = 0;
 
-            // Reset prevMouseState
-            prevMouseState = Mouse.GetState();
+            // Reset prevMouseState and Mouse Position
+            Initialize();
 
             CreateLookAt();
         }

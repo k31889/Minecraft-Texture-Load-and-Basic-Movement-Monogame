@@ -66,7 +66,7 @@ namespace Minecraft_Texture_Load_and_Basic_Movement
 
             // TODO: Add your update logic here
             fps.Update(gameTime);
-            Cam.Update(gameTime);
+            Cam.Update();
 
             base.Update(gameTime);
         }

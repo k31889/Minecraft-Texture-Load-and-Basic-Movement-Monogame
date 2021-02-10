@@ -71,10 +71,10 @@ namespace Minecraft_Texture_Load_and_Basic_Movement
 
 
             // Rotation on X axis
-            cameraDirection = Vector3.Transform(cameraDirection, Matrix.CreateFromAxisAngle(cameraUp, (-MathHelper.PiOver4 / 100) * (Mouse.GetState().X - prevMouseState.X) * (float)gameTime.ElapsedGameTime.TotalSeconds * Sensitivity));
+            cameraDirection = Vector3.Transform(cameraDirection, Matrix.CreateFromAxisAngle(cameraUp, (-MathHelper.PiOver4 / 100) * (Mouse.GetState().X - prevMouseState.X) * Sensitivity));
 
             // Rotation on Y axis
-            cameraDirection = Vector3.Transform(cameraDirection, Matrix.CreateFromAxisAngle(Vector3.Cross(cameraUp, cameraDirection), (MathHelper.PiOver4 / 100) * (Mouse.GetState().Y - prevMouseState.Y) * (float)gameTime.ElapsedGameTime.TotalSeconds * Sensitivity));
+            cameraDirection = Vector3.Transform(cameraDirection, Matrix.CreateFromAxisAngle(Vector3.Cross(cameraUp, cameraDirection), (MathHelper.PiOver4 / 100) * (Mouse.GetState().Y - prevMouseState.Y) * Sensitivity));
 
             //reset Y axis movement so player only moves horizontally
             cameraPosition.Y = 0;

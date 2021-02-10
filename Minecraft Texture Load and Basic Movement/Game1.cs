@@ -18,7 +18,6 @@ namespace Minecraft_Texture_Load_and_Basic_Movement
 
         private SpriteFont font;
 
-        private RasterizerState rasterizerState;
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -40,7 +39,6 @@ namespace Minecraft_Texture_Load_and_Basic_Movement
             Cam.Initialize();
             Textures = new TextureHandler(GraphicsDevice, "Minecraft Texture Atlas", "Cube");
 
-            rasterizerState = new RasterizerState();
 
             _graphics.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
             this.TargetElapsedTime = TimeSpan.FromSeconds(1d / 240d);
@@ -84,7 +82,6 @@ namespace Minecraft_Texture_Load_and_Basic_Movement
                 for (int j = -3; j < 2; j++)
                 {
                     _graphics.GraphicsDevice.DepthStencilState = DepthStencilState.Default;                                   //Gives render depth so that objects behind others aren't rendered on top
-                    rasterizerState.CullMode = CullMode.CullClockwiseFace;
                     Textures.DrawCube(Matrix.CreateTranslation(i * 2, -4, j * 2), Cam.GetView(), Cam.GetProjection(), 304, 240);
                 }
             }

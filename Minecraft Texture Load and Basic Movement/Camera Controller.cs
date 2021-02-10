@@ -54,7 +54,7 @@ namespace Minecraft_Texture_Load_and_Basic_Movement
             prevMouseState = Mouse.GetState();
         }
 
-        public void Update(GameTime gameTime)
+        public void Update(GameTime gameTimew)
         {
             if (Keyboard.GetState().IsKeyDown(Keys.W))
                 cameraPosition += cameraDirection * Sensitivity;
@@ -77,6 +77,8 @@ namespace Minecraft_Texture_Load_and_Basic_Movement
 
             // Reset prevMouseState
             prevMouseState = Mouse.GetState();
+
+            CreateLookAt();
         }
 
         private void CreateLookAt()

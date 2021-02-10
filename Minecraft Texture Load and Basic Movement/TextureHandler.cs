@@ -56,6 +56,7 @@ namespace Minecraft_Texture_Load_and_Basic_Movement
         public void DrawCube(Matrix world, Matrix view, Matrix projection, int TexturePosX, int TexturePosY)
         {
             graphicsDevice.SamplerStates[0] = SamplerState.PointWrap;                                                   //Removes issues where linear interpolation make pixel textures blurry
+
             foreach (ModelMesh mesh in Cube.Meshes)
             {
                 foreach (BasicEffect effect in mesh.Effects)

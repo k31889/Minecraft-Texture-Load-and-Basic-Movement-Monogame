@@ -25,8 +25,9 @@ namespace Minecraft_Texture_Load_and_Basic_Movement
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
 
-            _graphics.PreferredBackBufferWidth = 800;
-            _graphics.PreferredBackBufferHeight = 400;
+
+            _graphics.PreferredBackBufferWidth = 1280;
+            _graphics.PreferredBackBufferHeight = 720;
             _graphics.IsFullScreen = false;
             _graphics.ApplyChanges();
         }
@@ -39,8 +40,10 @@ namespace Minecraft_Texture_Load_and_Basic_Movement
             Player1 = new Player(10f, Cam);
             Textures = new TextureHandler(GraphicsDevice, "Minecraft Texture Atlas", "Cube");
 
+            _graphics.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
             this.TargetElapsedTime = TimeSpan.FromSeconds(1d / 240d);
             this.IsFixedTimeStep = true;
+            _graphics.GraphicsDevice.BlendState = BlendState.AlphaBlend;
             _graphics.SynchronizeWithVerticalRetrace = false;
             _graphics.ApplyChanges();
 
@@ -75,7 +78,8 @@ namespace Minecraft_Texture_Load_and_Basic_Movement
             // TODO: Add your drawing code here
             for(int i = 0; i < 3; i++)
             {
-                Textures.DrawCube(Matrix.CreateTranslation(i * 10, 0, 0), Cam.GetView(), Cam.GetProjection(), 304, 240);
+                _graphics.GraphicsDevice.DepthStencilState = DepthStencilState.Default;                                     //Gives render depth so that objects behind others aren't rendered
+                Textures.DrawCube(Matrix.CreateTranslation(i * 2, 0, 0), Cam.GetView(), Cam.GetProjection(), 304, 240);
             }
             _spriteBatch.Begin();
             fps.DrawFps(_spriteBatch, font, new Vector2(0f, 0f), Color.White);

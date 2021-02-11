@@ -7,12 +7,8 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Minecraft_Texture_Load_and_Basic_Movement
 {
-    class Player
+    class Physics_Engine
     {
-        public Player()
-        {
-
-        }
-
+        
     }
 }

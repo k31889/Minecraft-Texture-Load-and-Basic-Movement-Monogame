@@ -59,16 +59,22 @@ namespace Minecraft_Texture_Load_and_Basic_Movement
         public void Update(GameTime gameTime)
         {
             if (Keyboard.GetState().IsKeyDown(Keys.W))
+            {
                 cameraPosition += cameraDirection * movementSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            }
             if (Keyboard.GetState().IsKeyDown(Keys.S))
+            {
                 cameraPosition -= cameraDirection * movementSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-
+            }
             if (Keyboard.GetState().IsKeyDown(Keys.A))
+            {
                 cameraPosition += Vector3.Cross(cameraUp, cameraDirection) * movementSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            }
             if (Keyboard.GetState().IsKeyDown(Keys.D))
+            {
                 cameraPosition -= Vector3.Cross(cameraUp, cameraDirection) * movementSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-
+            }             
+          
 
             // Rotation on X axis
             cameraDirection = Vector3.Transform(cameraDirection, Matrix.CreateFromAxisAngle(cameraUp, (-MathHelper.PiOver4 / 100) * (Mouse.GetState().X - prevMouseState.X) * Sensitivity));
